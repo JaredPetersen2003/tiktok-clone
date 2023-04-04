@@ -3,11 +3,11 @@
 public class UserTree{
 
     public class Node{
-        String key;
+        User key;
         Node left;
         Node right;
 
-        public Node(String key){
+        public Node(User key){
             this.key = key;
             left = right = null;
         }
@@ -33,7 +33,7 @@ public class UserTree{
     }
 
     
-    public void insert(String key){
+    public void insert(User key){
         if (root == null)
             root = new Node(key);
         else
@@ -41,9 +41,9 @@ public class UserTree{
 
     }
 
-    private void insert(String key, Node node){
+    private void insert(User key, Node node){
 
-        if(key.compareTo(node.key) <= 0){
+        if(key.getAccountName().compareTo(node.key.getAccountName()) <= 0){
             if(node.left == null)
                 node.left = new Node(key);
             else

@@ -16,4 +16,8 @@ public class User{
         return accountName;
     }
 
+    public String toString(){
+        return accountName;
+    }
+
 }
