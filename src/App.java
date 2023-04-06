@@ -4,13 +4,15 @@ import java.io.FileNotFoundException;
 
 public class App {
 
-    private static UserTree Users;
+    private static BinarySearchTree<User> users;
 
     public static void main(String[] args) throws Exception {
         
-        Users = new UserTree();
         
-        int choice;
+        users = new BinarySearchTree<>();
+        
+        int choice = 0;
+        Scanner scan = new Scanner(System.in);
 
         while (choice != 8){
             System.out.println("Choose an action from the menu:");
@@ -24,17 +26,17 @@ public class App {
             System.out.println("8. Quit");
             System.out.println("Enter your choice");
             
-            Scanner scan = new Scanner(System.in);
-            int choice = scan.nextLine():
+            
+            choice = scan.nextInt();
             switch (choice) {
                 case 1:
                     
                     break;
                 case 2:
-                    Users.inOrderTraversal(Users.root);
+                    users.inOrder(users.root);
                     break;
                 case 3:
-                    addUser()
+                    addUser();
                     
                     break;
                 case 4:
@@ -50,7 +52,7 @@ public class App {
                     loadDataSet();
                     break;
                 case 8:
-                    
+            
                     break;
             
                 default:
@@ -58,6 +60,8 @@ public class App {
                     break;
             }
         }
+
+        scan.close();
     }
 
 
@@ -70,9 +74,10 @@ public class App {
         System.out.println("Enter Profile Description");
         String profileDescription = scan.nextLine();
 
-        Users.insert(new User(profileDescription, userName));
-        System.out.println("User Added!")        
+        users.insert(new User(profileDescription, userName));
+        System.out.println("User Added!");      
 
+        scan.close();
     }
     
     private static void loadDataSet(){
@@ -89,7 +94,7 @@ public class App {
                 //System.out.println(line);
                 String userName = line.substring(0, line.indexOf(" "));
                 String description = line.substring(line.indexOf(" ") + 1); 
-                Users.insert(new User(description, userName));
+                users.insert(new User(description, userName));
                 
             }            
         }

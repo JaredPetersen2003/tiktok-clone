@@ -100,7 +100,7 @@ Write a report that includes the following:
     A statement of what you included in your application(s) that constitutes creativity - how you went beyond the basic requirements of the assignment (at most 1 page).  Examples of creativity include: designing a visual/multimedia interface and implementing a follower/followed feature for multiuser feeds. 
     Summary statistics from your use of git to demonstrate usage.  Print out the first 10 lines and last 10 lines from "git log" , with line numbers added.  You can use a Unix command such as:
 
-git log | (ln=0; while read l; do echo $ln\: $l; ln=$((ln+1)); done) | (head -10; echo ...; tail -10)
+`git log | (ln=0; while read l; do echo $ln\: $l; ln=$((ln+1)); done) | (head -10; echo ...; tail -10)`
 Dev requirements
 
 As a software developer, you are required to make appropriate use of the following tools:

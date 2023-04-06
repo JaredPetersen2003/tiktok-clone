@@ -1,4 +1,4 @@
-public class User{
+public class User implements Comparable<User>{
     
     private String description;
     private String accountName;
@@ -18,6 +18,11 @@ public class User{
 
     public String toString(){
         return accountName;
+    }
+
+    @Override
+    public int compareTo(User anotherUser) {
+        return this.accountName.compareTo(anotherUser.getAccountName());
     }
 
 }
