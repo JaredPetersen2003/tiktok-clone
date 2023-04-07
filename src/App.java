@@ -52,7 +52,7 @@ public class App {
                     deleteUser();
                     break;
                 case 5:
-                    
+                    displayPosts();
                     break;
                 case 6:
                     
@@ -71,6 +71,14 @@ public class App {
         }
 
         scan.close();
+    }
+
+
+    private static void displayPosts() {
+        scan = new Scanner(System.in);
+
+        System.out.println("Enter User Name");
+        
     }
 
 
@@ -119,21 +127,41 @@ public class App {
 
     }
     
+
     private static void loadDataSet() throws IOException{
         // Load a list of users from a text file
         try{
             File data = new File("/home/jaredp/Documents/CSC2001F/Assignment 4/tiktok-clone/data/dataset.txt");
             BufferedReader br = new BufferedReader(new FileReader(data));
-            while (br.readLine() != null){
+            int i = 0;
+            String line;
+            while ((line = br.readLine()) != null){
 
-                String line = br.readLine();
+                // Create new User
                 if (line.startsWith("Create")){
                     line = line.substring(7);
                     String userName = line.substring(0, line.indexOf(" "));
                     String description = line.substring(line.indexOf(" ") + 1); 
                     users.insert(new User(description, userName));
-                }            
-        
+                }      
+                // Add Post
+                else if (line.startsWith("Add")){
+                    line = line.substring(4);
+                    String userName = line.substring(0, line.indexOf(" "));
+                    
+                    line = line.substring(line.indexOf(" ") + 1);
+                    String video = line.substring(0, line.indexOf(" "));
+                    
+                    line = line.substring(line.indexOf(" ") + 1);
+                    int numLikes = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+                    
+                 
+                    String title = line.substring(line.indexOf(" ") + 1);
+           
+                    User targetUser = users.find(new User(userName)).data;
+                    if (targetUser != null)
+                        targetUser.addPost(title, video, numLikes);
+                }
             }
             br.close();
         }
