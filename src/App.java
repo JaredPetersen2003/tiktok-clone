@@ -1,10 +1,14 @@
 import java.util.Scanner;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class App {
 
     private static BinarySearchTree<User> users;
+    static Scanner scan;
 
     public static void main(String[] args) throws Exception {
         
@@ -12,7 +16,7 @@ public class App {
         users = new BinarySearchTree<>();
         
         int choice = 0;
-        Scanner scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
 
         while (choice != 8){
             System.out.println("Choose an action from the menu:");
@@ -27,10 +31,15 @@ public class App {
             System.out.println("Enter your choice");
             
             
-            choice = scan.nextInt();
+            
+            try {
+                choice =  Integer.parseInt(scan.nextLine()) ;
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
             switch (choice) {
                 case 1:
-                    
+                    findUser();
                     break;
                 case 2:
                     users.inOrder(users.root);
@@ -40,7 +49,7 @@ public class App {
                     
                     break;
                 case 4:
-                    
+                    deleteUser();
                     break;
                 case 5:
                     
@@ -67,7 +76,7 @@ public class App {
 
     private static void addUser(){
 
-        Scanner scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
 
         System.out.println("Enter User Name");
         String userName = scan.nextLine();
@@ -77,28 +86,56 @@ public class App {
         users.insert(new User(profileDescription, userName));
         System.out.println("User Added!");      
 
-        scan.close();
+    }
+
+    private static void deleteUser(){
+        scan = new Scanner(System.in);
+
+        System.out.println("Enter User Name");
+        String userName = scan.nextLine();
+        
+        BinaryTreeNode<User> user = users.delete(new User(null, userName), users.root);
+        if (user!= null)
+            System.out.println(user.data.getDescription());
+        else
+            System.out.println("User not found");      
+
+
+    }
+
+    private static void findUser(){
+
+        scan = new Scanner(System.in);
+        
+
+        System.out.println("Enter User Name");
+        String userName = scan.nextLine();
+        
+        BinaryTreeNode<User> user = users.find(new User(null, userName));
+        if (user!= null)
+            System.out.println(user.data.getDescription());
+        else
+            System.out.println("User not found");      
+
     }
     
-    private static void loadDataSet(){
+    private static void loadDataSet() throws IOException{
         // Load a list of users from a text file
         try{
             File data = new File("/home/jaredp/Documents/CSC2001F/Assignment 4/tiktok-clone/data/dataset.txt");
-            Scanner scan = new Scanner(data);
+            BufferedReader br = new BufferedReader(new FileReader(data));
+            while (br.readLine() != null){
 
-        while (scan.hasNextLine()){
-
-            String line = scan.nextLine();
-            if (line.startsWith("Create")){
-                line = line.substring(7);
-                //System.out.println(line);
-                String userName = line.substring(0, line.indexOf(" "));
-                String description = line.substring(line.indexOf(" ") + 1); 
-                users.insert(new User(description, userName));
-                
-            }            
-        }
-        scan.close();
+                String line = br.readLine();
+                if (line.startsWith("Create")){
+                    line = line.substring(7);
+                    String userName = line.substring(0, line.indexOf(" "));
+                    String description = line.substring(line.indexOf(" ") + 1); 
+                    users.insert(new User(description, userName));
+                }            
+        
+            }
+            br.close();
         }
         catch(FileNotFoundException e){
             System.out.println("Error: Dataset not found");
