@@ -74,9 +74,13 @@ public class App {
     }
 
 
+    
+    /**
+     * The addPost function adds a post to the user's list of posts.
+     * 
+     */
     private static void addPost() {
         scan = new Scanner(System.in);
-
         System.out.println("Enter User Name");
         String userName = scan.nextLine();
         System.out.println("Enter Post Title");
@@ -88,6 +92,11 @@ public class App {
     }
 
 
+    
+    /**
+     * The displayPosts function displays all of the posts made by a user.
+     * 
+     */
     private static void displayPosts() {
         scan = new Scanner(System.in);
 
@@ -97,6 +106,12 @@ public class App {
     }
 
 
+    
+    /**
+     * The addUser function allows the user to add a new User object to the users BST.
+     * The function prompts for a username and profile description, then creates a new User object with those values.
+     * Finally, it inserts that User into the users BST. 
+     */
     private static void addUser(){
 
         scan = new Scanner(System.in);
@@ -111,6 +126,14 @@ public class App {
 
     }
 
+    
+    /**
+     * The deleteUser function allows the user to delete a user from the system.
+     * The function prompts for a username, and then searches through the binary tree of users to find that username.
+     * If it finds it, it deletes that node from the tree and prints out "User deleted".  Otherwise, if no such user is found in 
+     * the system, we print out "User not found".  
+     * 
+     */
     private static void deleteUser(){
         scan = new Scanner(System.in);
 
@@ -126,6 +149,14 @@ public class App {
 
     }
 
+    
+    /**
+     * The findUser function allows the user to search for a specific user in the binary tree.
+     * The function prompts the user to enter a username, and then searches through all of 
+     * the users in order to find that specific one. If it is found, then it prints out its description;
+     * otherwise, it prints out "User not found". 
+     * 
+     */
     private static void findUser(){
 
         scan = new Scanner(System.in);
@@ -143,6 +174,12 @@ public class App {
     }
     
 
+    
+    /**
+     * The loadDataSet function reads in a text file containing information about users and their posts.
+     * The function then creates new User objects for each user, and adds Posts to the Users' post BST.
+     * 
+     */
     private static void loadDataSet() throws IOException{
         // Load a list of users from a text file
         try{

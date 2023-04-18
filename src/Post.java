@@ -1,3 +1,8 @@
+/**
+ * The post class holds the title, video name, and number of likes for a User post
+ * 
+ * @author Jared Petersen
+ */
 public class Post implements Comparable<Post>{
 
     private String title;
@@ -24,8 +29,6 @@ public class Post implements Comparable<Post>{
     
     /**
      * The toString function returns a string representation of the object.
-     * 
-     *
      *
      * @return The title, video and number of likes
      */
@@ -33,10 +36,26 @@ public class Post implements Comparable<Post>{
         return "Title: " + title + "\nVideo: " + video + "\nNumber of Likes: " + Integer.toString(numLikes);
     }
 
+    
+    /**
+     * The getNumLikes function returns the number of likes for a given post.
+     * 
+     * @return The number of likes the post has
+     */
     public int getNumLikes(){
         return numLikes;
     }
 
+    
+    /**
+     * The compareTo function implements the Abstract Class comparable.
+     * It compares the number of likes on two posts.
+     * 
+     *
+     * @param Post o Compare the number of likes to another post
+     *
+     * @return The difference between the number of likes
+     */
     @Override
     public int compareTo(Post o) {
         Integer numInteger = Integer.valueOf(numLikes);
