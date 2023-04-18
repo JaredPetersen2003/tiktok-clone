@@ -55,7 +55,7 @@ public class App {
                     displayPosts();
                     break;
                 case 6:
-                    
+                    addPost();
                     break;
                 case 7:
                     loadDataSet();
@@ -74,10 +74,25 @@ public class App {
     }
 
 
+    private static void addPost() {
+        scan = new Scanner(System.in);
+
+        System.out.println("Enter User Name");
+        String userName = scan.nextLine();
+        System.out.println("Enter Post Title");
+        String postTitle = scan.nextLine();
+        System.out.println("Enter video name");
+        String videoName = scan.nextLine();
+    
+        users.find(new User(userName)).data.addPost(postTitle, videoName, 0);
+    }
+
+
     private static void displayPosts() {
         scan = new Scanner(System.in);
 
         System.out.println("Enter User Name");
+        users.find(new User(scan.nextLine())).data.displayPosts();
         
     }
 
@@ -102,9 +117,9 @@ public class App {
         System.out.println("Enter User Name");
         String userName = scan.nextLine();
         
-        BinaryTreeNode<User> user = users.delete(new User(null, userName), users.root);
+        BinaryTreeNode<User> user = users.delete(new User(userName), users.root);
         if (user!= null)
-            System.out.println(user.data.getDescription());
+            System.out.println("User deleted");
         else
             System.out.println("User not found");      
 
@@ -119,7 +134,7 @@ public class App {
         System.out.println("Enter User Name");
         String userName = scan.nextLine();
         
-        BinaryTreeNode<User> user = users.find(new User(null, userName));
+        BinaryTreeNode<User> user = users.find(new User(userName));
         if (user!= null)
             System.out.println(user.data.getDescription());
         else
@@ -133,8 +148,8 @@ public class App {
         try{
             File data = new File("/home/jaredp/Documents/CSC2001F/Assignment 4/tiktok-clone/data/dataset.txt");
             BufferedReader br = new BufferedReader(new FileReader(data));
-            int i = 0;
             String line;
+            
             while ((line = br.readLine()) != null){
 
                 // Create new User
