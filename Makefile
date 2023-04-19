@@ -1,22 +1,30 @@
 JFLAGS = -g
+SRCDIR = src
+BINDIR = bin
 JC = javac
 
 .SUFFIXES: .java .class
 
 .java.class:
-	$(JC) $(JFLAGS) $*.java
+	$(JC) $(JFLAGS) -d $(BINDIR) $*.java
 
 CLASSES = \
-		  App.java \
-		  Post.java \
-		  User.java
+	$(SRCDIR)/BinaryTreeNode.java \
+	$(SRCDIR)/BTQueueNode.java \
+	$(SRCDIR)/BTQueue.java \
+	$(SRCDIR)/BinaryTree.java \
+	$(SRCDIR)/BinarySearchTree.java \
+	$(SRCDIR)/Post.java \
+	$(SRCDIR)/User.java \
+	$(SRCDIR)/App.java \
+	$(SRCDIR)/TokTik.java
 
 default: classes
 
 classes: $(CLASSES:.java=.class)
 
 clean:
-	$(RM) *.class
+	$(RM) $(BINDIR)/*.class
 	
 run:
-	java main
+	java -cp $(BINDIR) TokTik

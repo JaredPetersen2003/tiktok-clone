@@ -19,7 +19,7 @@ public class TokTik{
         //JFrame set up
         frame = new JFrame("TokTik");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
+        frame.setSize(600, 600);
         
         //JMenu set up
         JMenuBar menuBar = new JMenuBar();
@@ -69,22 +69,30 @@ public class TokTik{
         JButton findUser = new JButton("Find User");
 
         findUser.addActionListener(new ActionListener() {
+            
+            /**
+             * The actionPerformed function is called when the user clicks on the "Find User" button.
+             * It prompts the user to enter a username, and then searches for that username in our list of users.
+             * If it finds a match, it displays all of that user's posts in chronological order (oldest first).
+             */
             @Override
             public void actionPerformed(ActionEvent e){
                 textArea.setText(null);
 
                 String userName = JOptionPane.showInputDialog(frame, "Please enter username", "Find User", JOptionPane.QUESTION_MESSAGE);
-                User targetUser = users.find(new User(userName)).data;
-                if (targetUser != null){
+                try {
+                    User targetUser = users.find(new User(userName)).data;
                     textArea.append("User: " + targetUser.getAccountName() + "\n");
                     textArea.append("Description: " + targetUser.getDescription()+ "\n");
                     textArea.append("==========================================\n");
                     textArea.append("Posts:\n\n");
                     targetUser.displayPosts(textArea);
+                    
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                else
-                JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
-
+                
+    
             }
         });
 
@@ -106,7 +114,7 @@ public class TokTik{
                     JOptionPane.showMessageDialog(frame, "User Deleted");
                 }
                 else
-                    JOptionPane.showMessageDialog(frame, "User not found");
+                JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
             }            
         });
 
@@ -121,7 +129,7 @@ public class TokTik{
             @Override
             public void actionPerformed(ActionEvent e){
 
-                String userName = JOptionPane.showInputDialog("Please enter username");
+                String userName = JOptionPane.showInputDialog(frame, "Please enter username", "Add Post", JOptionPane.QUESTION_MESSAGE);
 
                 if (TokTik.users.find(new User(userName)) != null){
 
@@ -135,9 +143,15 @@ public class TokTik{
                     "Add Post", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
                     if (result == JOptionPane.OK_OPTION){
-                        TokTik.users.find(new User(userName)).data.addPost(titleField.getText(), videoField.getText(), 0);
-                        JOptionPane.showMessageDialog(frame, "Post added", "Confirmation", JOptionPane.PLAIN_MESSAGE);
+                        if (!titleField.getText().isEmpty() && !videoField.getText().isEmpty()){
+                            TokTik.users.find(new User(userName)).data.addPost(titleField.getText(), videoField.getText(), 0);
+                            JOptionPane.showMessageDialog(frame, "Post added", "Confirmation", JOptionPane.PLAIN_MESSAGE);
+                        }
+                        else
+                            JOptionPane.showMessageDialog(frame, "Cannot have empty fields", "Error", JOptionPane.ERROR_MESSAGE);
+
                     }
+    
                 }
                 else
                     JOptionPane.showMessageDialog(frame, "User not found");
@@ -156,7 +170,7 @@ public class TokTik{
                 JTextField userField = new JTextField();
                 JTextField descriptionField = new JTextField();
                 String message1 = "Please Enter Username";
-                String message2 = "Please Enter Desctription";
+                String message2 = "Please Enter Description";
 
                 int result = JOptionPane.showOptionDialog(frame, new Object[] {message1, userField, message2, descriptionField},
                 "Add User", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);

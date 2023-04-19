@@ -1,5 +1,9 @@
 import javax.swing.JTextArea;
-
+/**
+ * The User class stores user information and a list of posts in a binary tree
+ * 
+ * @author Jared Petersen
+ */
 public class User implements Comparable<User>{
     
     private String description;

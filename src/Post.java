@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * The post class holds the title, video name, and number of likes for a User post
  * 
@@ -8,6 +11,7 @@ public class Post implements Comparable<Post>{
     private String title;
     private String  video;
     private int numLikes;
+    private LocalDateTime dateAdded;
 
     
     /**
@@ -24,6 +28,7 @@ public class Post implements Comparable<Post>{
         this.title = title;
         this.video = video;
         this.numLikes = numLikes;
+        this.dateAdded = LocalDateTime.now();
     }
 
     
@@ -33,7 +38,8 @@ public class Post implements Comparable<Post>{
      * @return The title, video and number of likes
      */
     public String toString(){
-        return "Title: " + title + "\nVideo: " + video + "\nNumber of Likes: " + Integer.toString(numLikes);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        return "Title: " + title + "\nVideo: " + video + "\nNumber of Likes: " + Integer.toString(numLikes) + "\nDate Added: " + dateAdded.format(myFormatObj);
     }
 
     
@@ -48,8 +54,19 @@ public class Post implements Comparable<Post>{
 
     
     /**
+     * The getDateAdded function returns the date and time that a post was added. 
+     * 
+     *
+     *
+     * @return The dateadded variable
+     */
+    public LocalDateTime getDateAdded(){
+        return dateAdded;
+    }
+    
+    /**
      * The compareTo function implements the Abstract Class comparable.
-     * It compares the number of likes on two posts.
+     * It compares the date a post was added
      * 
      *
      * @param Post o Compare the number of likes to another post
@@ -58,9 +75,7 @@ public class Post implements Comparable<Post>{
      */
     @Override
     public int compareTo(Post o) {
-        Integer numInteger = Integer.valueOf(numLikes);
-        Integer otherPostLikes = Integer.valueOf(o.getNumLikes());
-        return numInteger.compareTo(otherPostLikes);
+        return dateAdded.compareTo(o.getDateAdded());
     }
 
 
