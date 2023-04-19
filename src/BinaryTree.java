@@ -8,7 +8,7 @@ import javax.swing.JTextArea;
  */
 public class BinaryTree<dataType>
 {
-   BinaryTreeNode<dataType> root;
+   BinaryTreeNode<dataType> root = null;
    
    
    /**
@@ -90,6 +90,14 @@ public class BinaryTree<dataType>
       }   
    }
 
+   
+   /**
+    * The postOrder function traverses the tree in post-order, printing out each node's data.
+    * 
+    *
+    *
+    * @return A string of the tree in post order
+    */
    public void postOrder ()
    {
       postOrder (root);

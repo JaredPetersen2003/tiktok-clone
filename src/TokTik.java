@@ -8,6 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Tiktok clone with GUI
+ * 
+ * @author Jared Petersen
+*/
 public class TokTik{
 
     static JFrame frame;

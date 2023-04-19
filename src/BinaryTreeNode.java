@@ -26,6 +26,22 @@ public class BinaryTreeNode<dataType>
       right = r;
    }
    
+   
+   /**
+    * The getLeft function returns the left child of the current node.
+    * 
+    *
+    *
+    * @return The left child of the node
+    */
    BinaryTreeNode<dataType> getLeft () { return left; }
+   
+   /**
+    * The getRight function returns the right child of the current node.
+    * 
+    *
+    *
+    * @return The right child of the node
+    */
    BinaryTreeNode<dataType> getRight () { return right; }
 }

@@ -5,21 +5,22 @@ JC = javac
 
 .SUFFIXES: .java .class
 
-.java.class:
-	$(JC) $(JFLAGS) -d $(BINDIR) $*.java
+#.java.class:
+#	$(JC) $(JFLAGS) -d $(BINDIR) $*.java
+$(BINDIR)/%.class : $(SRCDIR)/%.java
+	$(JC) -d $(BINDIR)/ $(SRCDIR)/*.java
 
 CLASSES = \
-	$(SRCDIR)/BinaryTreeNode.java \
-	$(SRCDIR)/BTQueueNode.java \
-	$(SRCDIR)/BTQueue.java \
-	$(SRCDIR)/BinaryTree.java \
-	$(SRCDIR)/BinarySearchTree.java \
-	$(SRCDIR)/Post.java \
-	$(SRCDIR)/User.java \
-	$(SRCDIR)/App.java \
-	$(SRCDIR)/TokTik.java
+	$(BINDIR)/BinaryTreeNode.class \
+	$(BINDIR)/BinaryTree.class \
+	$(BINDIR)/BTQueueNode.class \
+	$(BINDIR)/BTQueue.class \
+	$(BINDIR)/BinarySearchTree.class \
+	$(BINDIR)/Post.class \
+	$(BINDIR)/User.class \
+	$(BINDIR)/TokTik.class
 
-default: classes
+default: $(CLASSES)
 
 classes: $(CLASSES:.java=.class)
 

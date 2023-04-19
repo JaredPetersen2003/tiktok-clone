@@ -99,6 +99,16 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
     *
     * @return The root of the subtree after
     */
+   
+   /**
+    * The delete function is a recursive function that takes in a dataType and the root of the tree.
+    * It then searches for the node containing d, and deletes it from the tree.
+    * 
+    *
+    * @param dataType d Find the node that needs to be deleted
+    *
+    * @return The root of the subtree
+    */
    public void delete ( dataType d )
    {
       root = delete (d, root);
