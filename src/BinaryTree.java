@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+import javax.swing.JTextArea;
+
 // Hussein's Binary Tree
 // 26 March 2017
 // Hussein Suleman
@@ -39,6 +43,7 @@ public class BinaryTree<dataType>
    {
       System.out.println (node.data);
    }
+
    
    public void preOrder ()
    {
@@ -80,6 +85,18 @@ public class BinaryTree<dataType>
          visit (node);
          inOrder (node.getRight ());
       }   
+   }
+
+   public void inOrder ( BinaryTreeNode<dataType> node, JTextArea output )
+   {
+      if (node != null)
+      {
+         inOrder (node.getLeft (), output);
+      
+         output.append(node.data.toString() + "\n");
+         
+         inOrder(node.getRight (), output);
+      } 
    }
 
    public void levelOrder ()
