@@ -1,3 +1,5 @@
+import javax.swing.JTextArea;
+
 public class User implements Comparable<User>{
     
     private String description;
@@ -57,6 +59,10 @@ public class User implements Comparable<User>{
      */
     public void displayPosts(){
         posts.inOrder();
+    }
+
+    public void displayPosts(JTextArea output){
+        posts.inOrder(posts.root, output);
     }
 
     

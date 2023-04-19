@@ -16,12 +16,10 @@ public class TokTik{
     public static void main(String[] args) throws NumberFormatException, IOException {
         users = new BinarySearchTree<>();
         
-        
-
         //JFrame set up
-        frame = new JFrame("GUI");
+        frame = new JFrame("TokTik");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 600);
+        frame.setSize(800, 800);
         
         //JMenu set up
         JMenuBar menuBar = new JMenuBar();
@@ -36,17 +34,15 @@ public class TokTik{
                 try {
                     JFileChooser fileChooser = new JFileChooser();
                     int returnValue = fileChooser.showOpenDialog(null);
-                    // int returnValue = jfc.showSaveDialog(null);
 
                     if (returnValue == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-                        System.out.println(selectedFile.getAbsolutePath());
+                        loadDataSet(fileChooser.getSelectedFile());
+                        JOptionPane.showMessageDialog(frame, "File loaded successfully");
                     }
                     else
                         JOptionPane.showMessageDialog(frame, "Cancelled");
 
-                    TokTik.loadDataSet();
-                    JOptionPane.showMessageDialog(frame, "File loaded successfully");
+                    
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -57,23 +53,42 @@ public class TokTik{
         frame.add(BorderLayout.NORTH, menuBar);
 
         // Text Area
-        JTextArea textArea = new JTextArea("SDF");
+        JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
-        JScrollPane scroll = new JScrollPane (textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JScrollPane scroll = new JScrollPane (textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         frame.add(scroll);
-
-        
-        //frame.add(textArea);
 
 
         // Button panel
         JPanel panel = new JPanel();
         JButton listUsers = new JButton("List Users");
-        JButton listPosts = new JButton("List Posts");
         JButton addUser = new JButton("Add User");
         JButton addPost = new JButton("Add Post");
         JButton deleteUser = new JButton("Delete User");
+        JButton findUser = new JButton("Find User");
+
+        findUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                textArea.setText(null);
+
+                String userName = JOptionPane.showInputDialog(frame, "Please enter username", "Find User", JOptionPane.QUESTION_MESSAGE);
+                User targetUser = users.find(new User(userName)).data;
+                if (targetUser != null){
+                    textArea.append("User: " + targetUser.getAccountName() + "\n");
+                    textArea.append("Description: " + targetUser.getDescription()+ "\n");
+                    textArea.append("==========================================\n");
+                    textArea.append("Posts:\n\n");
+                    targetUser.displayPosts(textArea);
+                }
+                else
+                JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        });
+
+        
 
         deleteUser.addActionListener(new ActionListener() {
             
@@ -130,7 +145,6 @@ public class TokTik{
         });
 
         addUser.addActionListener(new ActionListener() {
-            
             /**
              * The actionPerformed function is called when the user clicks on the "Add User" button.
              * It creates a new JTextField for both username and description, then prompts the user to enter their desired username and description.
@@ -154,41 +168,26 @@ public class TokTik{
             }            
         });
 
-        listPosts.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                JTextField userField = new JTextField();
-                String message = "Please Enter Username";
-                String username = JOptionPane.showInputDialog(frame, "Please enter username", "List posts", JOptionPane.QUESTION_MESSAGE); 
-                textArea.setText("");
-                if (users.find(new User(username)) != null)
-                    users.inOrder(users.root, textArea);               
-                else    
-                    JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
-            }            
-        });
 
-
-
+        // List users in the text area
         listUsers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                textArea.setText(null);
                 users.inOrder(users.root, textArea);               
             }            
         });
 
     
-
+        // Add buttons
         panel.add(listUsers);
-        panel.add(listPosts);
         panel.add(addUser);
         panel.add(addPost);
         panel.add(deleteUser);
-
+        panel.add(findUser);
         frame.add(BorderLayout.SOUTH, panel);
 
         frame.setVisible(true);
-        //
     }
 
     
@@ -197,11 +196,10 @@ public class TokTik{
     * The function then creates new User objects for each user, and adds Posts to the Users' post BST.
     * 
     */
-    private static void loadDataSet() throws IOException{
+    private static void loadDataSet(File file) throws IOException{
         // Load a list of users from a text file
         try{
-            File data = new File("/home/jaredp/Documents/CSC2001F/Assignment 4/tiktok-clone/data/dataset.txt");
-            BufferedReader br = new BufferedReader(new FileReader(data));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             
             while ((line = br.readLine()) != null){
